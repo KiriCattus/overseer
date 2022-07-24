@@ -1,0 +1,34 @@
+#Directories
+/build/
+
+#Hidden Directories
+.gradle/
+.settings/
+.mtj.tmp/
+.idea/
+.vscode/
+
+#File Extensions
+*.iml
+*.ipr
+*.iws
+*.war
+*.ear
+*.class
+*.classpath
+*.project
+
+#File Types
+hs_err_pid*
+NBTExample.nbt
+Thumbs.db
+
+#Generated Files
+OCR.png
+qr.png
+diction.txt
+data/
+changelog.md
+
+#BotStuff
+run/mimir_config/.env

@@ -1,0 +1,99 @@
+import java.time.OffsetDateTime
+import java.time.ZoneOffset
+
+plugins {
+    id 'java'
+    id 'idea'
+    id 'application'
+    id 'org.cadixdev.licenser' version '0.6.1'
+}
+
+group project.group
+version project.bot_version
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+application {
+    mainClass = 'dev.tophatcat.mimir.Mimir'
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name 'JDA Maven'
+        url 'https://m2.dv8tion.net/releases'
+    }
+
+    maven {
+        name 'JDA Snapshots Maven'
+        url 'https://m2.dv8tion.net/snapshots'
+    }
+
+    maven {
+        name 'JDA Chewtils Maven'
+        url "https://m2.chew.pro/releases"
+    }
+
+    maven {
+        name 'JDA Chewtils Snapshots Maven'
+        url "https://m2.chew.pro/snapshots"
+    }
+}
+
+dependencies {
+    implementation "pw.chew:jda-chewtils:${jda_chewtils_version}"
+    implementation("net.dv8tion:JDA:${jda_version}")
+    implementation("ch.qos.logback:logback-classic:${logback_classic_version}")
+    implementation("com.google.code.gson:gson:${gson_version}")
+    implementation "io.github.cdimascio:dotenv-java:${dot_env_version}"
+}
+
+var manifestAttributes = [
+        "Specification-Title"      : bot_name,
+        "Specification-Vendor"     : bot_author,
+        "Specification-Version"    : "1", // We are version 1 of ourselves
+        "Implementation-Title"     : bot_name,
+        "Implementation-Version"   : project.jar.archiveVersion,
+        "Implementation-Vendor"    : bot_author,
+        "Implementation-Timestamp" : new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+        "Homepage"                 : bot_homepage,
+        "Source"                   : bot_source,
+        "Issue-Tracker"            : bot_issue_tracker,
+        "Built-On-Java"            : "${System.getProperty('java.vm.version')} (${System.getProperty('java.vm.vendor')})",
+        "Build-On-JDA"             : jda_version
+]
+
+jar {
+    from("LICENSE.txt") {
+        rename {
+            "LICENSE_${archiveBaseName.get()}"
+        }
+
+        manifest.attributes(manifestAttributes)
+        includeEmptyDirs false
+        preserveFileTimestamps = false
+        reproducibleFileOrder = true
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+}
+
+final var actualDateTime = OffsetDateTime.now(ZoneOffset.UTC).withNano(0)
+
+license {
+    ignoreFailures = false
+    header = project.file('LicenseHeader.txt')
+    include '**/*.java'
+    include '**/*.kt'
+    exclude '**/package-info.java'
+    exclude '**/module-info.java'
+    newLine = false
+    properties {
+        year = actualDateTime.getYear()
+        name = bot_name
+        source = bot_source
+        author = bot_author
+    }
+}
