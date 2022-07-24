@@ -31,4 +31,4 @@ data/
 changelog.md
 
 #BotStuff
-run/mimir_config/.env
+run/mimir_configs/.env

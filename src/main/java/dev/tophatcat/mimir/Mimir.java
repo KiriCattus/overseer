@@ -66,7 +66,7 @@ public final class Mimir {
      * The environment properties for the bot.
      */
     public static Dotenv dotenv = Dotenv.configure()
-            .directory("/mimir_configs")
+            .directory("mimir_configs")
                 .filename(".env")
                 .load();
 
