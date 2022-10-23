@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "removeComments": true,
+        "sourceMap": true,
+        "resolveJsonModule": true,
+        "importHelpers": true,
+        "outDir": "./build/"
+    }
+}
