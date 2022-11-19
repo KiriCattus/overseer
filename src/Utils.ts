@@ -1,4 +1,14 @@
-import { Client } from 'discord.js'
+import { Client, GatewayIntentBits } from 'discord.js';
+
+export const BOT_TOKEN = process.env.BOT_TOKEN;
+export const MODE_LAUNCHED = process.env.MODE_LAUNCHED;
+export const WATCHING_ACTIVITY = process.env.WATCHING_ACTIVITY;
+export const BOT_INTENTS = [
+	GatewayIntentBits.Guilds,
+	GatewayIntentBits.GuildMessages,
+	GatewayIntentBits.GuildMembers,
+	GatewayIntentBits.GuildBans,
+];
 
 export default (client: Client): void => {
 	client.on('ready', async () => {
@@ -23,7 +33,6 @@ export default (client: Client): void => {
 		console.log('Repository: https://github.com/KiriCattus/overseer');
 		console.log('Description: A Discord bot for logging events fired in your Discord server to set channels.');
 		console.log('----------------------------------------------------------------------------------');
-		console.info(`Overseer: Successfully authenticated with Discord as ${client.user.tag}!`);
 		console.info(`Overseer: Ready to montor world...`);
 	});
 }

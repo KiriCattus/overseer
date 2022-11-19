@@ -1,7 +1,6 @@
-import { Client, AuditLogEvent, EmbedBuilder, TextChannel } from 'discord.js';
+import { AuditLogEvent, Client, EmbedBuilder, TextChannel } from 'discord.js';
 
 export default (client: Client): void => {
-
 	// Log when a user is kicked.
 	client.on('guildMemberRemove', async function (event) {
 		// TODO Per guild configurable channels.
@@ -28,16 +27,16 @@ export default (client: Client): void => {
 				(channel as TextChannel).send(message);
 			} else {
 				const embed = new EmbedBuilder()
-				.setColor(0xFF0000)
-				.setTitle('User Kicked')
-				.addFields(
-					{ name: 'User tag:', value: event.user.tag, inline: true },
-					{ name: 'Kick reason:', value: kickReason, inline: false },
-				)
-				.setFooter({ text: `User ID: ${event.user.id}`, iconURL: event.user.displayAvatarURL()})
-				.setTimestamp(Date.now());
-				(channel as TextChannel).send({ embeds: [embed] });
+					.setColor(0xff0000)
+					.setTitle('User Kicked')
+					.addFields(
+						{ name: 'User Tag:', value: event.user.tag, inline: true },
+						{ name: 'Kick Reason:', value: kickReason, inline: false }
+					)
+					.setFooter({ text: `User ID: ${event.user.id}`, iconURL: event.user.displayAvatarURL() })
+					.setTimestamp(Date.now());
+				(channel as TextChannel).send({ embeds: [embed] }).catch((exception) => console.error(exception));
 			}
 		}
 	});
-}
+};

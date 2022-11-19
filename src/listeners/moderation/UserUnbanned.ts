@@ -22,10 +22,10 @@ export default (client: Client): void => {
 			.setColor(0xFF0000)
 			.setTitle('User Unbanned')
 			.addFields(
-				{ name: 'User tag:', value: unban.user.tag, inline: false },
+				{ name: 'User Tag:', value: unban.user.tag, inline: false },
 			)
 			.setFooter({ text: `User ID: ${unban.user.id}` })
 			.setTimestamp(Date.now());
-		(channel as TextChannel).send({ embeds: [embed] });
+		(channel as TextChannel).send({ embeds: [embed] }).catch(exception => console.error(exception));
 	});
 }
