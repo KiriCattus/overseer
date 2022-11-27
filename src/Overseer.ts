@@ -56,19 +56,5 @@ async function init() {
 //Role Events (Created, Deleted, Updated (Name/Permissions))
 //Voice Events (Join/Leave/Switch, server muted/deafened)
 
-//Moderation Events (Banned, Unbanned, Kicked and Timeouts)
-function moderationLogging() {
-	userBanned(client);
-	userUnbanned(client);
-	//userKicked(client); //TODO Fix this crashing on ban/leave ?
-	//TODO userTimedOut(client);
-}
-
-//Join and Leave Events
-function userLogging() {
-	userEntered(client);
-	userLeft(client);
-}
-
 //TODO Ready and connection events.
 init();
