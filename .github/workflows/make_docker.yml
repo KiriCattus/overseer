@@ -1,4 +1,4 @@
-name: Make Docker
+name: Publish to GitHub Container Registry
 on:
   push:
     tags:
@@ -18,11 +18,16 @@ jobs:
         registry: ghcr.io
         username: ${{ github.repository_owner }}
         password: ${{ github.token }}
-    - name: Build Docker Image
+    - name: Extract Docker metadata
+      id: meta
+      uses: docker/metadata-action@v4
+      with:
+        images: ghcr.io/${{ github.repository }}
+    - name: Build Docker image
       uses: docker/build-push-action@v3
       with:
-        tags: |
-          ghcr.io/${{ github.repository }}:latest
-          ghcr.io/${{ github.repository }}:${{ env.TAG }}
+        push: true
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
         build-args: |
           VERSION=${{ env.TAG }}
